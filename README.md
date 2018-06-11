@@ -1,12 +1,37 @@
-# starter-mean-app
+# starter-mean-app #
 node angular application using MEAN stack.
 
-## Steps to setup MEAN project
-### Install/upgrade angular cli
-### ng build to create dist folder
-### Install express and body-parser
+## MEAN stack mean ##  
+**MongoDb** - NoSQL database.  
+**Express** - web framework that runs on node.  
+**Angular** - Client side development platform.    
+**Node** - Execution environment.  
 
-### Create server.js
+## Setup MEAN project  ##
+
+### Step 1 : Install/upgrade angular cli ### 
+ angular cli is a commnd line interface to build angular application.  
+`` npm install -g @angular/cli `` 
+
+### Step 2 : Create new Angular project
+Below command creates new angular project with routing module.  
+`` ng new project1 --routing ``  
+
+### Step 3 : Run application in browser  
+Execute below command inside project folder  
+`` ng serve -o ``  
+
+### Step 4 : Build project 
+`` ng build ``  
+It creates the distributable folder "dist" of entire angular application,  
+which is further feed into the express server.  
+
+### Step 5 : Install node module dependencies
+* express 
+* body-parser  
+`` ng install --save express body-parser``  
+
+### Step 6 : Create ``server.js`` in project root path.
 ```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -42,8 +67,8 @@ app.listen(port, function(){
 });
 ```
 
-### create server\routes\api.js
-```
+### Step 7 : Create ``api.js`` under folder path ``server\routes`` 
+```javascript
 const express = require('express');
 const router = express.Router();
 
@@ -59,5 +84,3 @@ You can configure and use online mongodb instance from [mLab](https:\\mlab.com)
 
 Install mongoose client in node module.  
 `` npm install mongoose``
-
-### 
