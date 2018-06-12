@@ -154,3 +154,40 @@ router.get('/videos', function(req, res){
 	});
 });
 ```
+### Step 15 : get model by id
+add below code in ``api.js`` file.  
+```javascript
+// getting single video json by Id
+router.get('/videos/:id', function(req, res){
+	console.log('get request for single video');
+	
+	// find is the method provided by mongoDB
+	Video.findById(req.params.id).exec(function(err,data){
+		if(err){
+			console.log("Error retrieving videos");
+		} else {
+			res.json(data);
+		}
+	});
+});
+```
+### Step 16 : insert data into mongoDB.
+add the below code in ``api.js`` and test via postman POST method.  
+```javascript
+// save video json into mongoDB
+router.post('/video', function(req,res){
+	console.log("post a video");
+	var newVideo = new Video();
+	newVideo.title = req.body.title;
+	newVideo.url = req.body.url;
+	newVideo.description = req.body.description;
+
+	newVideo.save(function(err, insertedVideo){
+		if(err){
+			console.log("Error saving video");
+		} else {
+			res.json(insertedVideo);
+		}
+	});
+});
+```
