@@ -11,7 +11,7 @@ node angular application using MEAN stack.
 
 ### Step 1 : Install/upgrade angular cli ### 
  angular cli is a commnd line interface to build angular application.  
-`` npm install -g @angular/cli `` 
+``npm install -g @angular/cli`` 
 
 ### Step 2 : Create new Angular project
 Below command creates new angular project with routing module.  
@@ -78,9 +78,22 @@ router.get('/', function(req, res){
 
 module.exports = router;
 ```
+### Step 8 : Execute and verify application is working.  
+``node server``  
 
-### Step 1 : Configuring MongoDB
+### Step 9 : Configuring MongoDB
 You can configure and use online mongodb instance from [mLab](https:\\mlab.com)  
+1. signup for new account  
+2. create new MongoDB deployment.  
+3. select single node and sandbox.
+4. provide database name and click on mongodb deployment.
+5. click on the instance created and then click on add collections.
+6. provide the name to the collection.
+7. Then click on users nect to collections tab and click on add database user.
+8. provide database username & password and click on create.
+9. Go back and in collection tab click on created collection then click on documents tab.
+10 . click on add document and save your document.
 
-Install mongoose client in node module.  
+
+### Step 10 : Install mongoose package.  
 `` npm install mongoose``
