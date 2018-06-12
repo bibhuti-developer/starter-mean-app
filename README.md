@@ -172,7 +172,7 @@ router.get('/videos/:id', function(req, res){
 });
 ```
 ### Step 16 : insert data into mongoDB.
-add the below code in ``api.js`` and test via postman POST method.  
+add the below code in ``api.js`` and test via postman using POST method.  
 ```javascript
 // save video json into mongoDB
 router.post('/video', function(req,res){
@@ -191,3 +191,55 @@ router.post('/video', function(req,res){
 	});
 });
 ```
+### Step 17 : update data into MongoDB
+add the below code in ``api.js`` and test via postman using PUT method.  
+```javascript
+// update video json into mongoDB
+router.put('/video/:id', function(req,res){
+	console.log("update a video");
+	
+	Video.findByIdAndUpdate(
+		// id for which data will be updated
+		req.params.id,
+		{
+			// data which to be updated
+			$set:{
+				title:req.body.title,
+				url : req.body.url,
+				description: req.body.description
+			}
+		},
+		{
+			// if no entry found then create
+			new: true
+		},	
+		function(err, updatedVideo){
+			if(err){
+				console.log("Error updating video");
+			} else {
+				// return back the updated json
+				res.json(updatedVideo);
+			}
+		}
+	);
+});
+```
+
+### Step 18 : delete data from MongoDB
+add the below code in ``api.js`` and test via postman using DELETE method.  
+```javascript
+// deleting video json by Id
+router.delete('/video/:id', function(req, res){
+	console.log('deleteting a video');
+	
+	// find is the method provided by mongoDB
+	Video.findByIdAndRemove(req.params.id, function(err,data){
+		if(err){
+			console.log("Error deleting video");
+		} else {
+			res.json(data);
+		}
+	});
+});
+```
+
