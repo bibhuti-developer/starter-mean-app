@@ -89,11 +89,68 @@ You can configure and use online mongodb instance from [mLab](https:\\mlab.com)
 4. provide database name and click on mongodb deployment.
 5. click on the instance created and then click on add collections.
 6. provide the name to the collection.
-7. Then click on users nect to collections tab and click on add database user.
+7. then click on users nect to collections tab and click on add database user.
 8. provide database username & password and click on create.
-9. Go back and in collection tab click on created collection then click on documents tab.
-10 . click on add document and save your document.
-
+9. go back and in collection tab click on created collection then click on documents tab.  
+10. click on add document and save your document.  
 
 ### Step 10 : Install mongoose package.  
-`` npm install mongoose``
+`` npm install --save mongoose``
+
+### Step 11 : Create model inside server/models folder.
+create model eg. video.js inside models folder.
+```javascript
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// below schema is the blueprint of the object in the database.
+const videoSchema = new Schema({
+    title: String,
+    url: String,
+    description: String
+});
+
+// create model from schema
+// video - name of the model
+// mongodata - collection name in mongodb
+module.exports = mongoose.model('video', videoSchema, 'mongodata');
+```
+### Step 12  : configure mongoDB connectivity
+add below scripts into the api.js file present in server/routes folder.  
+```javascript
+const mongoose = require('mongoose');
+
+// string you can copy from http://mlab user tab.
+const db = "mongodb://user:pass123@dsxxxxxx.mlab.com:55260/mongodata";
+mongoose.Promise = global.Promise;
+mongoose.connect(db, function(err){
+	if(err){
+		console.error("Error!" + err);
+	}
+});
+```
+### Step 13 : verify that configuration is sucessfull.
+``node server`` and hit the url ``http://localhost:3000/api`` in browser.  
+No error in console will confirm that connection to mongoDB stablished successfully.  
+
+### Step 14 : fetch json from the mongoDB.
+add below code in ``api.js`` file inside ``server/routes`` folder.  
+```javascript
+// this points to model created inside model folder ie. video.js
+const Video = require('../models/video');
+
+// fetch all the videos from mongoDB
+router.get('/videos', function(req, res){
+	console.log('get request for all videos');
+	
+	// find is the method provided by mongoDB
+	// {} dont have search criteria
+	Video.find({}).exec(function(err,data){
+		if(err){
+			console.log("Error retrieving videos");
+		} else {
+			res.json(data);
+		}
+	});
+});
+```
