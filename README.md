@@ -94,10 +94,11 @@ You can configure and use online mongodb instance from [mLab](https:\\mlab.com)
 9. go back and in collection tab click on created collection then click on documents tab.  
 10. click on add document and save your document.  
 
-### Step 10 : Install mongoose package.  
+## Configuring mongoDB
+### Step 10.1 : Install mongoose package.  
 `` npm install --save mongoose``
 
-### Step 11 : Create model inside server/models folder.
+### Step 10.2 : Create model inside server/models folder.
 create model eg. video.js inside models folder.
 ```javascript
 const mongoose = require('mongoose');
@@ -115,7 +116,7 @@ const videoSchema = new Schema({
 // mongodata - collection name in mongodb
 module.exports = mongoose.model('video', videoSchema, 'mongodata');
 ```
-### Step 12  : configure mongoDB connectivity
+### Step 10.3  : configure mongoDB connectivity
 add below scripts into the api.js file present in server/routes folder.  
 ```javascript
 const mongoose = require('mongoose');
@@ -129,11 +130,11 @@ mongoose.connect(db, function(err){
 	}
 });
 ```
-### Step 13 : verify that configuration is sucessfull.
+### Step 10.4 : verify that configuration is sucessfull.
 ``node server`` and hit the url ``http://localhost:3000/api`` in browser.  
 No error in console will confirm that connection to mongoDB stablished successfully.  
 
-### Step 14 : fetch json from the mongoDB.
+### Step 10.5 : fetch json from the mongoDB.
 add below code in ``api.js`` file inside ``server/routes`` folder.  
 ```javascript
 // this points to model created inside model folder ie. video.js
@@ -154,7 +155,7 @@ router.get('/videos', function(req, res){
 	});
 });
 ```
-### Step 15 : get model by id
+### Step 10.6 : get model by id
 add below code in ``api.js`` file.  
 ```javascript
 // getting single video json by Id
@@ -171,7 +172,7 @@ router.get('/videos/:id', function(req, res){
 	});
 });
 ```
-### Step 16 : insert data into mongoDB.
+### Step 10.7 : insert data into mongoDB.
 add the below code in ``api.js`` and test via postman using POST method.  
 ```javascript
 // save video json into mongoDB
@@ -191,7 +192,7 @@ router.post('/video', function(req,res){
 	});
 });
 ```
-### Step 17 : update data into MongoDB
+### Step 10.8 : update data into MongoDB
 add the below code in ``api.js`` and test via postman using PUT method.  
 ```javascript
 // update video json into mongoDB
@@ -225,7 +226,7 @@ router.put('/video/:id', function(req,res){
 });
 ```
 
-### Step 18 : delete data from MongoDB
+### Step 10.9 : delete data from MongoDB
 add the below code in ``api.js`` and test via postman using DELETE method.  
 ```javascript
 // deleting video json by Id
@@ -242,4 +243,60 @@ router.delete('/video/:id', function(req, res){
 	});
 });
 ```
+## Configuring Angular project.  
+### Step : 11.1  creating components using angular cli
+goto app folder and execute the below commnd, **g** stands for generate   
+**c** stands for component and **home** is the name of our component.  
+``ng g c home``
+``ng g c videoCenter``
+this creates two folder inside ``src\app`` folder.  
 
+### Step : 11.2 configuring routes to the components.
+update the ``app-routing.module.ts`` file  
+```typescript
+import { HomeComponent } from './home/home.component';
+import { VideoCentreComponent } from './video-centre/video-centre.component';
+
+const routes: Routes = [
+  {path: '', redirectTo:'/home', pathMatch:'full'},
+  {path: 'home', component: HomeComponent},
+  {path: 'videos', component: VideoCentreComponent}
+];
+```
+### Step : 11.3 configure bootstrap
+``npm install --save bootstrap``  
+update ``angular.json`` styles tag.
+```json
+"styles": [
+   "src/styles.css",
+   "node_modules/bootstrap/dist/css/bootstrap.min.css"
+]
+```
+
+### Step : 11.4 creating UI
+replace the below code into ``app.component.html`` file.  
+```html
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">VideoPlayer</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li>
+        <a riuterLink="/home" routerLinkActive="active">Home</a>
+      </li>
+      <li>  
+        <a riuterLink="/videos" routerLinkActive="active">Playlist</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+```
+build the project to update distribution folder  
+``ng build``  
+
+### Step : 11.5 
